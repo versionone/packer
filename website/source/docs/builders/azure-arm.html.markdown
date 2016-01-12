@@ -30,8 +30,10 @@ builder.
 
 ### Required:
 
--   `access_key` (string) - The access key used to communicate with AWS. [Learn
-    how to set this.](/docs/builders/amazon.html#specifying-amazon-credentials)
+-   `auth_token` (string) - OAuth token used to authenticate against the API.
+-   `image` (string) - The base image to build from, such as Ubuntu or Windows.
+-   `size` (string) - The type of instance class to use, such as `Basic_A1` or `Standard_D4`.
+-   `location` (string) - Which region the VM will be built in, such as West US
 
 ### Optional:
 
