@@ -1,0 +1,12 @@
+{
+    "variables": {
+        "name": "vanilla"
+    },
+    "builders": [
+        {
+            "type": "file",
+            "content": "{{user `name`}}",
+            "target": "{{user `name`}}.txt"
+        }
+    ]
+}

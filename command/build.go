@@ -52,6 +52,8 @@ func (c BuildCommand) Run(args []string) int {
 		return 1
 	}
 
+	log.Printf("CBEDNARSKI %#v", core)
+
 	// Get the builds we care about
 	buildNames := c.Meta.BuildNames(core)
 	builds := make([]packer.Build, 0, len(buildNames))

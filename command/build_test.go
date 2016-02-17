@@ -122,6 +122,77 @@ func TestBuildExceptFileCommaFlags(t *testing.T) {
 	}
 }
 
+func TestBuildVarVar(t *testing.T) {
+	c := &BuildCommand{
+		Meta: testMetaFile(t),
+	}
+
+	args := []string{
+		"-var", "name=chocolate",
+		"-var", "name=strawberry",
+		filepath.Join(testFixture("varvarfile"), "template.json"),
+	}
+
+	defer cleanup()
+
+	if code := c.Run(args); code != 0 {
+		fatalCommand(t, c.Meta)
+	}
+
+	if !fileExists("strawberry.txt") {
+		t.Fatalf("expected to find strawberry.txt")
+	}
+}
+
+func TestBuildVarFileVarFile(t *testing.T) {
+	c := &BuildCommand{
+		Meta: testMetaFile(t),
+	}
+
+	args := []string{
+		"-var-file=" + filepath.Join(testFixture("varvarfile"), "vars-chocolate.json"),
+		"-var-file=" + filepath.Join(testFixture("varvarfile"), "vars-strawberry.json"),
+		filepath.Join(testFixture("varvarfile"), "template.json"),
+	}
+
+	defer cleanup()
+
+	if code := c.Run(args); code != 0 {
+		fatalCommand(t, c.Meta)
+	}
+
+	if !fileExists("strawberry.txt") {
+		t.Fatalf("expected to find strawberry.txt")
+	}
+}
+
+// TestBuildVarVarFile tests if var and var-file have the proper override
+// behavior. The documented behavior is:
+//
+// - When more than one -var or -var-file is specified, the last one wins
+// - -var always wins over -var-file
+func TestBuildVarVarFile(t *testing.T) {
+	c := &BuildCommand{
+		Meta: testMetaFile(t),
+	}
+
+	args := []string{
+		"-var", "name=strawberry",
+		"-var-file=" + filepath.Join(testFixture("varvarfile"), "vars-chocolate.json"),
+		filepath.Join(testFixture("varvarfile"), "template.json"),
+	}
+
+	defer cleanup()
+
+	if code := c.Run(args); code != 0 {
+		fatalCommand(t, c.Meta)
+	}
+
+	if !fileExists("strawberry.txt") {
+		t.Fatalf("expected to find strawberry.txt")
+	}
+}
+
 // fileExists returns true if the filename is found
 func fileExists(filename string) bool {
 	if _, err := os.Stat(filename); err == nil {

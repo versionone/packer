@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"log"
 
 	"github.com/mitchellh/packer/helper/flag-kv"
 	"github.com/mitchellh/packer/helper/flag-slice"
@@ -118,7 +119,9 @@ func (m *Meta) FlagSet(n string, fs FlagSetFlags) *flag.FlagSet {
 	// FlagSetVars tells us what variables to use
 	if fs&FlagSetVars != 0 {
 		f.Var((*kvflag.Flag)(&m.flagVars), "var", "")
+		log.Printf("CBEDNARSKI %#v", &m.flagVars)
 		f.Var((*kvflag.FlagJSON)(&m.flagVars), "var-file", "")
+		log.Printf("CBEDNARSKI %#v", &m.flagVars)
 	}
 
 	// Create an io.Writer that writes to our Ui properly for errors.
