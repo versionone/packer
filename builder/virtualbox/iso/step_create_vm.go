@@ -62,8 +62,15 @@ func (s *stepCreateVM) Cleanup(state multistep.StateBag) {
 		return
 	}
 
-	driver := state.Get("driver").(vboxcommon.Driver)
+	config := state.Get("config").(*Config)
 	ui := state.Get("ui").(packer.Ui)
+
+	if config.DoNotDelete {
+    	ui.Say("Keeping virtual machine...")
+    	return		
+	}
+
+	driver := state.Get("driver").(vboxcommon.Driver)
 
 	ui.Say("Unregistering and deleting virtual machine...")
 	var err error = nil
