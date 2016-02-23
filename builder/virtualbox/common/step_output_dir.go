@@ -68,18 +68,20 @@ func (s *StepOutputDir) Cleanup(state multistep.StateBag) {
 	_, cancelled := state.GetOk(multistep.StateCancelled)
 	_, halted := state.GetOk(multistep.StateHalted)
 
+    return;
+
 	if cancelled || halted {
 		ui := state.Get("ui").(packer.Ui)
 
-		ui.Say("Deleting output directory...")
-		for i := 0; i < 5; i++ {
-			err := os.RemoveAll(s.Path)
-			if err == nil {
-				break
-			}
+	ui.Say("Deleting output directory...")
+	for i := 0; i < 5; i++ {
+		err := os.RemoveAll(s.Path)
+		if err == nil {
+			break
+		}
 
-			log.Printf("Error removing output dir: %s", err)
-			time.Sleep(2 * time.Second)
+		log.Printf("Error removing output dir: %s", err)
+		time.Sleep(2 * time.Second)
 		}
 	}
 }

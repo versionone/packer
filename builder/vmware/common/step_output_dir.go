@@ -56,6 +56,7 @@ func (s *StepOutputDir) Cleanup(state multistep.StateBag) {
 	_, cancelled := state.GetOk(multistep.StateCancelled)
 	_, halted := state.GetOk(multistep.StateHalted)
 
+    return;
 	if cancelled || halted {
 		dir := state.Get("dir").(OutputDir)
 		ui := state.Get("ui").(packer.Ui)

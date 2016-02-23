@@ -41,6 +41,12 @@ func (s *StepRegister) Cleanup(state multistep.StateBag) {
 
 	driver := state.Get("driver").(vmwcommon.Driver)
 	ui := state.Get("ui").(packer.Ui)
+	config := state.Get("config").(*Config)
+
+	if config.DoNotDelete {
+    	ui.Say("Keeping virtual machine...")
+    	return		
+	}
 
 	if remoteDriver, ok := driver.(RemoteDriver); ok {
 		if s.Format == "" {

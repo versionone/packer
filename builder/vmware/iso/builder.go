@@ -40,6 +40,7 @@ type Config struct {
 	DiskName            string   `mapstructure:"vmdk_name"`
 	DiskSize            uint     `mapstructure:"disk_size"`
 	DiskTypeId          string   `mapstructure:"disk_type_id"`
+	DoNotDelete          bool     `mapstructure:"do_not_delete"`
 	FloppyFiles         []string `mapstructure:"floppy_files"`
 	Format              string   `mapstructure:"format"`
 	GuestOSType         string   `mapstructure:"guest_os_type"`
